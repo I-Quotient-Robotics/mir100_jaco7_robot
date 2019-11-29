@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="log_type" default="screen"/>
+
+  <!-- Robot description -->
+  <param name="robot_description" command="$(find xacro)/xacro $(find mir100_jaco7_description)/urdf/mir_jaco.urdf.xacro" />
+
+
+  <!-- caster -->
+  <include file="$(find mir_driver)/launch/mir_bringup.launch">
+  </include>
+
+  <node name="pan_tilt_driver_node" pkg="pan_tilt_driver" type="PanTiltDriverNode" output="$(arg log_type)">
+    <param name="port_name" value="/dev/pan_tilt"/>
+    <param name="yaw_joint_name" value="pan_tilt_yaw_joint"/>
+    <param name="pitch_joint_name" value="pan_tilt_pitch_joint"/>
+  </node>
+    <!-- <remap from="/joint_states" to="/pan_tilt/joint_states"/> -->
+
+  <include file="$(find kinect2_bridge)/launch/kinect2_bridge.launch">
+    <arg name="reg_method" value="cpu" />
+    <arg name="publish_tf" value="true" />
+  </include>
+
+  <!-- Kinova Jaco v2 -->
+  <node name="j2s7s300_driver" pkg="kinova_driver" type="kinova_arm_driver" output="$(arg log_type)" cwd="node" args="j2s7s300">
+    <!-- <rosparam file="$(find caster_man_bringup)/config/kinova_arm.yaml" command="load" /> -->
+    <param name="robot_name" value="j2s7s300" />   
+    <param name="robot_type" value="j2s7s300" />
+    <remap from="j2s7s300_driver/out/joint_state" to="joint_states"/>
+  </node>
+
+  <!-- Realsense -->
+  
+  <include file="$(find realsense2_camera)/launch/includes/nodelet.launch.xml">
+    <arg name="tf_prefix"             value="camera"/>
+    <arg name="initial_reset"         value="false"/>
+    <arg name="enable_sync"           value="true"/>
+    <arg name="align_depth"           value="true"/>
+    <arg name="enable_pointcloud"     value="true"/>
+  </include>
+
+  <!-- Aruco detect -->
+  <node pkg="aruco_ros" type="marker_publisher" name="aruco_marker_publisher">
+    <param name="image_is_rectified" value="True"/>
+    <param name="marker_size"        value="0.063"/>
+    <param name="reference_frame"    value="camera_color_optical_frame"/>
+    <param name="camera_frame"       value="camera_color_optical_frame"/>
+    <remap from="/camera_info" to="/color/camera_info" />
+    <remap from="/image" to="/color/image_raw" />
+  </node>
+
+</launch>

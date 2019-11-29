@@ -1,0 +1,9 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<launch>  
+  <arg name="type" default="view"/>
+
+  <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find mir100_jaco7_rviz)/viz/$(arg type).rviz" /> -->
+  <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find mir100_jaco7_rviz)/viz/mir100_jaco7.viz.rviz" /> -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find mir100_jaco7_rviz)/viz/mobile.rviz" />
+
+</launch>

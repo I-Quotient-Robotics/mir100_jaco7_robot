@@ -1,0 +1,13 @@
+footprint: [[-0.445, -0.29], [-0.445, 0.29], [0.445, 0.29], [0.445, -0.29]]
+
+#layer definitions
+static_layer:
+    map_topic: /map
+    subscribe_to_updates: true
+
+obstacle_layer:
+    observation_sources: laser
+    laser: {topic: f_scan, sensor_frame: front_laser_link, data_type: LaserScan, clearing: true, marking: true, inf_is_valid: true}
+
+inflation_layer:
+    inflation_radius: 3.0

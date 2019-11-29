@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro"
+       name="mir_100" >
+
+  <!-- MiR100 base -->
+  <xacro:include filename="$(find mir_description)/urdf/include/mir_100_v1.urdf.xacro" />
+  <xacro:mir_100 prefix=""/>
+
+  <xacro:include filename="$(find kinova_description)/urdf/j2s7s300.xacro"/>
+  <xacro:include filename="$(find pan_tilt_description)/urdf/pan_tilt.urdf.xacro" />
+  <xacro:include filename="$(find mir100_jaco7_description)/urdf/realsense_d435.urdf.xacro" />
+  <xacro:include filename="$(find mir100_jaco7_description)/urdf/kinect_v2.urdf.xacro" />
+
+
+  <link name="root"/>
+  <xacro:property name="robot_root" value="root" />
+  <xacro:j2s7s300  base_parent="${robot_root}"/>
+
+
+  <joint name="connect_base_and_kinova" type="fixed">
+    <child link="root" />
+    <parent link="support" />
+    <origin xyz="0.31 0 0.228" rpy="0 0 ${J_PI/2}" />    
+  </joint> 
+  
+  <link name="support">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://mir100_jaco7_description/mesh/mir-kinova-kinect-2040_urdf.stl" />
+      </geometry>
+      <material name="">
+        <color rgba="0.2 0.2 0.2 1" />
+      </material>
+    </visual>
+  </link>
+
+  <joint name="connect_base_and_support" type="fixed">
+    <child link="support" />
+    <parent link="surface" />
+    <origin xyz="0 0 0" rpy="0 0 0" />    
+  </joint> 
+
+  <xacro:pan_tilt parent="support" >
+    <origin xyz="-0.09 0 0.923" rpy="0 0 0" />
+  </xacro:pan_tilt>
+
+  <xacro:kinect_v2 parent="pan_tilt_kinect_surface" >
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </xacro:kinect_v2>
+
+  <link name="realsense_coupling_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://mir100_jaco7_description/mesh/ur3_realsense_coupling.stl" />
+      </geometry>
+      <material name="">
+        <color rgba="0.20 0.20 0.20 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="realsense_coupling_joint" type="fixed">
+    <origin xyz="0 0 -0.015" rpy="${J_PI/2} ${J_PI/2} ${J_PI/2}" />
+    <parent link="j2s7s300_link_7"/>
+    <child link="realsense_coupling_link"/>
+  </joint>
+
+  <sensor_d435 parent="realsense_coupling_link" prefix="camera">
+    <origin xyz="0.01005 0 0.0725" rpy="0 0 0"/>
+  </sensor_d435>
+
+</robot>

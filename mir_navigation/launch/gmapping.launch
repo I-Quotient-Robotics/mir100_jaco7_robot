@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="log_type" default="screen"/>
+  <arg name="move_base" default="false"/>
+
+  <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping_node" respawn="false" output="$(arg log_type)">
+    <rosparam file="$(find mir_navigation)/config/gmapping.yaml" command="load" />
+    <remap from="scan" to="f_scan"/>
+  </node>
+
+  <group if="$(arg move_base)">
+    <node pkg="move_base" type="move_base" name="move_base_node" respawn="false" output="$(arg log_type)">
+    </node>
+  </group>
+</launch>
