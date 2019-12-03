@@ -3,7 +3,7 @@
   <arg name="log_type" default="screen"/>
   
   <!-- Arguments -->
-  <arg name="map_file" default="$(find mir_navigation)/map/shanda.yaml"/>
+  <arg name="map_file" default="$(find mir100_jaco7_navigation)/map/shanda.yaml"/>
   <arg name="rviz" default="false"/>
 
   <!-- Map server -->

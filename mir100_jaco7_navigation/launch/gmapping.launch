@@ -5,7 +5,7 @@
   <arg name="move_base" default="false"/>
 
   <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping_node" respawn="false" output="$(arg log_type)">
-    <rosparam file="$(find mir_navigation)/config/gmapping.yaml" command="load" />
+    <rosparam file="$(find mir100_jaco7_navigation)/config/gmapping.yaml" command="load" />
     <remap from="scan" to="f_scan"/>
   </node>
 

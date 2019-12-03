@@ -6,7 +6,7 @@
 
   <!-- AMCL -->
   <node pkg="amcl" type="amcl" name="amcl" output="$(arg log_type)">
-    <rosparam file="$(find mir_navigation)/config/amcl.yaml" command="load" />
+    <rosparam file="$(find mir100_jaco7_navigation)/config/amcl.yaml" command="load" />
     <remap from="scan" to="$(arg scan_topic)"/>
   </node>
 </launch>
