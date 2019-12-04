@@ -1,12 +1,12 @@
 # mir100_jaco7_robot
-Consists of MIR 100, Kinova jaco 7d3f, pan_tilt, Realsense D435i, Kinect V2, support. This repo contains bringup launch files, Mobile crawl demo, URDF description, navigation stack , moveit config, rviz display.  If you find a bug or missing feature in this software, please report it on the issue tracker.
+Consists of MIR 100, Kinova jaco 7d3f, pan_tilt, Realsense D435i, Kinect V2, support. This repo contains bringup launch files, Mobile grasp demo, URDF description, navigation stack , moveit config, rviz display.  If you find a bug or missing feature in this software, please report it on the issue tracker.
 ## Package overview
 - mir100_jaco7_app: Mobile craw demo
 - mir100_jaco7_bringup: Bringup launch files
 - mir100_jaco7_moveit_config: Moveit config
 - mir100_jaco7_rviz: Rviz display
 - mir100_jaco7_description:  URDF description
-- mir_navigation: Navigation stack
+- mir100_jaco7_navigation: Navigation stack
 ## Tutorials
 See [wiki](https://github.com/I-Quotient-Robotics/mir100_jaco7_robot/wiki).
 ## Package links
